@@ -1,0 +1,270 @@
+// font roboto
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('../fonts/roboto/RobotoCondensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@orange: #ff6600;
+@navy: #132c5b;
+@heightFooter: 40px;
+
+body,
+p,
+a,
+span {
+    font-family: 'roboto-regular';
+}
+
+p {
+    margin: 0;
+}
+
+.btn-orange {
+    background: @orange;
+    color: #fff;
+    border-radius: 5px;
+
+    &:hover {
+        background: @orange;
+        color: #000;
+    }
+}
+
+.btn-success {
+    background: #01b051;
+    border: none;
+}
+
+.btn-navy {
+    background: @navy;
+    color: #fff;
+    border-radius: 5px;
+    
+    &:hover {
+        background: @navy;
+        color: #fff;
+    }
+}
+
+.btn-grey {
+    background: #cdcccd;
+    color: #000;
+    
+    &:hover {
+        background: #cdcccd;
+    }
+}
+
+.btn {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.text-navy {
+    color: @navy;
+}
+
+.text-gray {
+    color: darkgray;
+}
+
+.border-orange {
+    border: 1px solid @orange;
+}
+
+.border-black {
+    border: 1px solid #000;
+}
+
+.border-navy {
+    border: 1px solid @navy;
+}
+
+input:focus,
+textarea:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+input.border-orange:focus,
+textarea.border-orange:focus {
+    border: 1px solid @orange !important;
+}
+
+.helper-sign {
+    top: 6px;
+    right: 10px;
+    position: absolute;
+}
+
+.form-note {
+    color: darkgray;
+}
+
+.bg-navy {
+    background: @navy;
+}
+
+// begin::header
+.main-header {
+    padding: 10px 100px;
+
+    &__item {
+        .logo {
+            width: 80px;
+            height: auto;
+        }
+
+        &-contactus {
+            gap: 30px;
+
+            .call-us,
+            .email {
+                gap: 10px;
+
+                &-image {
+                    width: 20px;
+                    height: auto;
+                }
+
+                &-text {
+                    .title {
+                        text-transform: uppercase;
+                        color: #000;
+                    }
+
+                    .value {
+                        font-size: 12px;
+                        color: #acb7c2;
+                    }
+                }
+            }
+
+            .divider {
+                height: 30px;
+                width: 1px;
+                border: 1px solid #e6e6e6;
+            }
+        }
+
+        .iso {
+            width: 300px;
+            height: auto;
+        }
+    }
+}
+// end::header
+
+
+// begin::navbar
+.navbar {
+    padding: 0 70px;
+    transition: all .5s;
+    background: #fff;
+
+    &-title {
+        padding: 3px 10px;
+        background: @navy;
+        width: 110px;
+        text-align: center;
+
+        .title {
+            text-transform: uppercase;
+            color: @orange;
+            word-wrap: break-word;
+        }
+    }
+}
+
+.navbar.active {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+// end::navbar
+
+// begin::footer
+.main-footer {
+    padding: 10px 100px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    // position: absolute;
+
+    .copyright {
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .footer-social {
+        width: 12px;
+        height: auto;
+        cursor: pointer;
+    }
+}
+// end::footer
+
+
+// begin::content
+.main-section {
+    padding: 15px 50px;
+    min-height: 550px;
+}
+
+.report-greeting {
+    .title {
+        color: @navy;
+        font-weight: bold;
+    }
+
+    .content {
+        color: darkgray;
+    }
+
+    ul {
+        li {
+            color: darkgray;
+        }
+    }
+}
+
+.main-form-reporting {
+    .content {
+        color: darkgray;
+    }
+}
+
+.main-success {
+    .content {
+        color: darkgray;
+    }
+
+    .summary {
+        padding: 0 350px;
+        margin-top: 20px;
+
+        .ticket {
+            &-text {
+                font-weight: bold;
+                text-align: right;
+            }
+        }
+
+        .btn-ticket,
+        .btn-token {
+            width: 50%;
+        }
+    }
+}
+
+.main-tracking {
+    &__summary {
+        border-bottom: 1px solid #e6e6e6;
+        padding-bottom: 30px;
+    }
+}
+// end::content
