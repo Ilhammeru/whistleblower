@@ -8,8 +8,10 @@
 
     {{-- bootstrap --}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/dist/css/bootstrap.min.css') }}">
+    {{-- bootstrap-icon --}}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-icons/font/bootstrap-icons.css') }}">
     {{-- main style --}}
-    <link rel="stylesheet/less" type="text/css" href="{{ asset('assets/css/main.less') }}" />
+    <link rel="stylesheet/less" type="text/css" href="{{ asset('css/main.css') }}" />
 
     {{-- custom css --}}
     @stack('styles')

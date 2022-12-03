@@ -1,0 +1,246 @@
+// font roboto
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('../../public/assets/fonts/roboto/RobotoCondensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@sidebarWidth: 70px;
+@navbarHeight: 60px;
+@lightGreen: #93d051;
+@navy: #132c5b;
+@lightYellow: #fefe00;
+@grey: #d8d9d8;
+@red: #ff0000;
+
+body,
+p,
+a,
+span {
+    font-family: 'roboto-regular';
+}
+
+p {
+    margin: 0;
+}
+
+.btn-navy {
+    background: @navy;
+    color: #fff;
+    border-radius: 5px;
+    
+    &:hover {
+        background: @navy;
+        color: #fff;
+    }
+}
+
+.text-navy {
+    color: @navy;
+}
+
+.col-form-label {
+    padding-top: 2px;
+}
+
+// begin::navbar
+.navbar {
+    padding: 10px 40px;
+    border-bottom: 1px solid #000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: @navbarHeight;
+    background: #fff;
+
+    .profile {
+
+        .img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e6e6e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail {
+            .email {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .action {
+        .bi {
+            cursor: pointer;
+        }
+    }
+}
+// end::navbar
+
+// begin::sidebar
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: @sidebarWidth;
+    padding-top: calc(@navbarHeight + 20px);
+    background: #fff;
+    height: 100%;
+    z-index: 9;
+    border-right: 1px solid #000;
+
+    .nav-item {
+        padding-left: 0;
+
+        .nav-link {
+            padding: .5rem 1.5rem;
+
+            a {
+                text-decoration: none;
+                color: #000;
+
+                &:hover {
+                    color: lightblue;
+                }
+
+                .bi {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .nav-link.active {
+            background: #e6e6e6;
+        }
+    }
+}
+// end::sidebar
+
+// begin::content
+.main-section.plain {
+    padding-top: 0;
+    padding-left: 0;
+}
+
+.main-section {
+    padding-top: calc(@navbarHeight + 10px);
+    padding-left: calc(@sidebarWidth + 10px);
+
+    .container-login {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+
+        .box-login {
+            padding: 10px 20px;
+            width: 400px;
+            height: 600px;
+
+            .logo {
+                text-align: center;
+
+                img {
+                    width: 100px;
+                    height: auto;
+                }
+            }
+
+            .title {
+                padding: 0 80px;
+                margin-bottom: 50px;
+                margin-top: 30px;
+
+                p {
+                    padding: 3px 10px;
+                    background: #132c5b;
+                    text-align: center;
+                    color: #ff6600;
+                }
+            }
+
+            .password-container {
+                .bi {
+                    right: 10px;
+                    top: 5px;
+                    cursor: pointer;
+                }
+
+                .bi.open {
+                    display: block;
+                }
+
+                .bi.close {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .dashboard {
+        .card-info {
+            &__1 {
+                grid-area: large;
+            }
+
+            &__2 {
+                grid-area: sec;
+            }
+
+            &__3 {
+                grid-area: third;
+            }
+        }
+
+        .card-info {
+            display: grid;
+            grid-template-areas: 'large large sec third';
+            border: 1px solid #000;
+
+            &__1,
+            &__2,
+            &__3 {
+                padding: 5px 15px;
+                border-right: 1px solid #000;
+            }
+
+            &__3 {
+                border-right: none;
+            }
+        }
+    }
+
+    .main-reporting {
+        #table-admin-reporting {
+            padding-bottom: 20px;
+
+            .badge-status {
+                padding: 5px 10px;
+                border-radius: 5px;
+                border: 1px solid #000;
+            }
+
+            .badge-status.success {
+                background: @lightGreen;
+                color: #fff;
+            }
+
+            .badge-status.yellow {
+                background: @lightYellow;
+                color: #000;
+            }
+
+            .bi {
+                cursor: pointer;
+            }
+        }
+    }
+}
+// end::content

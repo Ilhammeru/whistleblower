@@ -1,10 +1,14 @@
 <?php
 
 return [
+    'login' => 'Login',
+    'username' => 'Username',
+    'password' => 'Password',
     'create_report' => 'Buat Laporan',
     'follow_up' => 'Tindak Lanjut',
     'ticket' => 'No. Laporan',
     'track' => 'Lacak',
+    'whistleblower' => 'Whistleblower',
     'reporting_form' => 'Form Pengaduan',
     'name_and_company' => 'Nama & Instansi Pelapor',
     'phone' => 'No. Telepon/HP',
@@ -25,5 +29,24 @@ return [
     'reporting_status' => 'Status Pengaduan',
     'reporting_detail' => 'Detail Pengaduan',
     'ask_investigator' => 'Tanya Investigator',
-    'additional_description' => 'Keterangan Tambahan'
+    'additional_description' => 'Keterangan Tambahan',
+    'description' => 'Keterangan',
+    'detail' => 'Detail',
+    'result' => 'Hasil',
+    'ask_team' => 'Tanya Tim',
+    'send' => 'Kirim',
+    'close' => 'Tutup',
+    'reporting_detail_1' => 'Rincian Pengaduan',
+    'first_evidence' => 'Bukti Awal',
+    'additional_evidence' => 'Bukti Tambahan',
+    'complaint progress' => 'Perkembangan Pengaduan',
+    'input_token' => 'Masukkan Token',
+    'submit' => 'Submit',
+    'save' => 'Simpan',
+    'dashboard' => 'Dashboard',
+    'reporting' => 'Pengaduan',
+    'change_status' => 'Ubah status',
+    'proof' => 'Bukti',
+    'upload_investigation_report' => 'Unggah hasil investigasi',
+    'question' => 'Pertanyaan'
 ];

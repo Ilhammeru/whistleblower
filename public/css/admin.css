@@ -1,0 +1,178 @@
+@font-face {
+  font-family: 'roboto-regular';
+  src: url(/fonts/RobotoCondensed-Regular.ttf?b76c85260df02c11c63044bf8739818d) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+body,
+p,
+a,
+span {
+  font-family: 'roboto-regular';
+}
+p {
+  margin: 0;
+}
+.btn-navy {
+  background: #132c5b;
+  color: #fff;
+  border-radius: 5px;
+}
+.btn-navy:hover {
+  background: #132c5b;
+  color: #fff;
+}
+.text-navy {
+  color: #132c5b;
+}
+.col-form-label {
+  padding-top: 2px;
+}
+.navbar {
+  padding: 10px 40px;
+  border-bottom: 1px solid #000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  height: 60px;
+  background: #fff;
+}
+.navbar .profile .img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navbar .profile .detail .email {
+  font-size: 12px;
+}
+.navbar .action .bi {
+  cursor: pointer;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70px;
+  padding-top: calc(60px + 20px);
+  background: #fff;
+  height: 100%;
+  z-index: 9;
+  border-right: 1px solid #000;
+}
+.sidebar .nav-item {
+  padding-left: 0;
+}
+.sidebar .nav-item .nav-link {
+  padding: 0.5rem 1.5rem;
+}
+.sidebar .nav-item .nav-link a {
+  text-decoration: none;
+  color: #000;
+}
+.sidebar .nav-item .nav-link a:hover {
+  color: lightblue;
+}
+.sidebar .nav-item .nav-link a .bi {
+  font-size: 24px;
+}
+.sidebar .nav-item .nav-link.active {
+  background: #e6e6e6;
+}
+.main-section.plain {
+  padding-top: 0;
+  padding-left: 0;
+}
+.main-section {
+  padding-top: calc(60px + 10px);
+  padding-left: calc(70px + 10px);
+}
+.main-section .container-login {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.main-section .container-login .box-login {
+  padding: 10px 20px;
+  width: 400px;
+  height: 600px;
+}
+.main-section .container-login .box-login .logo {
+  text-align: center;
+}
+.main-section .container-login .box-login .logo img {
+  width: 100px;
+  height: auto;
+}
+.main-section .container-login .box-login .title {
+  padding: 0 80px;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+.main-section .container-login .box-login .title p {
+  padding: 3px 10px;
+  background: #132c5b;
+  text-align: center;
+  color: #ff6600;
+}
+.main-section .container-login .box-login .password-container .bi {
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+}
+.main-section .container-login .box-login .password-container .bi.open {
+  display: block;
+}
+.main-section .container-login .box-login .password-container .bi.close {
+  display: none;
+}
+.main-section .dashboard .card-info__1 {
+  grid-area: large;
+}
+.main-section .dashboard .card-info__2 {
+  grid-area: sec;
+}
+.main-section .dashboard .card-info__3 {
+  grid-area: third;
+}
+.main-section .dashboard .card-info {
+  display: grid;
+  grid-template-areas: 'large large sec third';
+  border: 1px solid #000;
+}
+.main-section .dashboard .card-info__1,
+.main-section .dashboard .card-info__2,
+.main-section .dashboard .card-info__3 {
+  padding: 5px 15px;
+  border-right: 1px solid #000;
+}
+.main-section .dashboard .card-info__3 {
+  border-right: none;
+}
+.main-section .main-reporting #table-admin-reporting {
+  padding-bottom: 20px;
+}
+.main-section .main-reporting #table-admin-reporting .badge-status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+.main-section .main-reporting #table-admin-reporting .badge-status.success {
+  background: #93d051;
+  color: #fff;
+}
+.main-section .main-reporting #table-admin-reporting .badge-status.yellow {
+  background: #fefe00;
+  color: #000;
+}
+.main-section .main-reporting #table-admin-reporting .bi {
+  cursor: pointer;
+}
+

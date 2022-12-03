@@ -13,7 +13,7 @@
                 <p class="text-gray mt-3">Laporan bapak/Ibu telah kami terima dan akan kami tindak lanjuti</p>
             </div>
             <div>
-                <button class="btn border-navy d-block">{{ __('view.reporting_detail') }}</button>
+                <button class="btn border-navy d-block" type="button" onclick="openTokenModal()">{{ __('view.reporting_detail') }}</button>
                 <button class="btn btn-navy mt-3 d-block">{{ __('view.ask_investigator') }}</button>
             </div>
         </div>
@@ -87,6 +87,27 @@
             </div>
         </div>
     </div>
+
+    {{-- modal token --}}
+    <div class="modal fade" id="modalToken" tabindex="-1" aria-labelledby="modalTokenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <form action="">
+                        <div class="form-group mb-2">
+                            <p class="fw-bold">{{ __('view.input_token') }}</p>
+                            <input type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <div class="text-end">
+                                <a class="btn btn-navy" href="{{ route('reporting.detail') }}">{{ __('view.submit') }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -106,6 +127,10 @@
                     </div>
             `);
             $('.no-action').html(parseInt(fileItemNo + 2));
+        }
+
+        function openTokenModal() {
+            $('#modalToken').modal('show');
         }
     </script>
 @endpush

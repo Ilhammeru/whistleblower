@@ -11,7 +11,23 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+// mix.js('resources/js/app.js', 'public/js')
+//     .postCss('resources/css/app.css', 'public/css', [
+//         //
+//     ]);
+
+mix.webpackConfig({
+    output: {
+      library: 'libraryName',
+      libraryTarget: 'umd',
+      umdNamedDefine: true, // optional
+      globalObject: 'this' // optional
+    }
+  });
+  
+
+mix.less('resources/css/main.less', 'public/css')
+    .less('resources/css/admin.less', 'public/css')
+    .js(['resources/js/dashboard.js', 'resources/js/admin-reporting.js'], 'public/js/app.js')
+    .sourceMaps()
+    .browserSync('whistleblower-app.test');
