@@ -83,7 +83,15 @@ Table report_log {
     report_id int [ref: > report.id, not null]
     message text [not null]
     type tinyint [note: '1 is from user, 2 is from investigator']
+    // channel_id int [ref: > channel_message.id]
     receiver_id int
+    created_at timestamp
+    updated_at timestamp
+}
+
+Table channel_message {
+    id int [pk, increment]
+    name varchar [not null]
     created_at timestamp
     updated_at timestamp
 }

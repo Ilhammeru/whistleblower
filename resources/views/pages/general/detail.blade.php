@@ -3,7 +3,7 @@
 @section('content')
     <div class="main-detail position-relative">
         {{-- close button --}}
-        <a class="btn border-black btn-sm" href="{{ route('reporting.tracking') }}" style="position: absolute; top: 0; right: 0;"><span class="me-2">&#215;</span> {{ __('view.close') }}</a>
+        <a class="btn border-black btn-sm" href="{{ route('reporting.tracking', encrypt_data($detail['ticket_number'])) }}" style="position: absolute; top: 0; right: 0;"><span class="me-2">&#215;</span> {{ __('view.close') }}</a>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">

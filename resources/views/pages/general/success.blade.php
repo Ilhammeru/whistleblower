@@ -14,7 +14,7 @@
                     <p class="fw-bold">{{ __('view.no_registration') }} : </p>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-orange btn-ticket">WRK6JB/2022</button>
+                    <button class="btn btn-orange btn-ticket">{{ $ticket }}</button>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
                     <p class="fw-bold">{{ __('view.token') }} : </p>
                 </div>
                 <div class="col-6">
-                    <button class="btn border-black btn-token">4123</button>
+                    <button class="btn border-black btn-token">{{ $token }}</button>
                 </div>
             </div>
 

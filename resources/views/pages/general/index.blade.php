@@ -58,17 +58,46 @@
             dapat meninput nomor laporan pengaduan pada menu dibawah ini:
         </p>
         <div class="tracking">
-            <form action="" id="tracking">
+            <form action="{{ route('reporting.track.report') }}" method="POST" id="form-tracking">
                 <div class="form-group row">
                     <label for="ticket" class="col-form-label col-md-1">{{ __('view.ticket') }}:</label>
                     <div class="col-md-3">
-                        <input type="text" name="ticket" class="form-control border-orange w-100" id="ticket">
+                        <input type="text" required name="ticket" class="form-control border-orange w-100" id="ticket">
                     </div>
                     <div class="col-md-3">
-                        <a class="btn btn-orange" id="btn-tracking" href="{{ route('reporting.tracking') }}">{{ __('view.track') }}</a>
+                        <button class="btn btn-orange" id="btn-tracking" type="button" onclick="tracking()">{{ __('view.track') }}</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function tracking() {
+            let form = $('#form-tracking');
+            let method = form.attr('method');
+            let url = form.attr('action');
+            let data = form.serialize();
+            let btnText = $('#btn-tracking').text();
+
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                beforeSend: function() {
+                    setLoading('btn-tracking', true);
+                },
+                success: function(res) {
+                    setLoading('btn-tracking', false, btnText);
+                    window.location.href = res.url;
+                },
+                error: function(err) {
+                    setLoading('btn-tracking', false, btnText);
+                    setNotif(true, err.responseJSON ? err.responseJSON.message : 'Something wrong');
+                }
+            })
+        }
+    </script>
+@endpush

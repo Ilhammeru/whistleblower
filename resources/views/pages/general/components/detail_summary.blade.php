@@ -1,12 +1,12 @@
 <div class="detail-tab__item mt-3">
     <div class="detail-tab__item-header d-flex align-items-center justify-content-between">
         <p class="title text-navy fw-bold">
-            {{ __('view.reporting_detail_1') }} No. WRK6JB/2022
+            {{ __('view.reporting_detail_1') }} No. {{ $detail['ticket_number'] }}
         </p>
     
         <button class="btn btn-warning text-white pe-5 ps-5" type="button">
-            <span class="text-uppercase d-block">diproses</span>
-            <span class="d-block" style="font-size: 12px;">11 Nov 2022</span>
+            <span class="text-uppercase d-block">{{ $detail['status_text'] }}</span>
+            <span class="d-block" style="font-size: 12px;">{{ date('d M Y', strtotime($detail['created_at'])) }}</span>
         </button>
     </div>
 
@@ -19,7 +19,7 @@
                     <span class="helper-sign">:</span>
                 </label>
                 <div class="col-md-4">
-                    <p class="col-form-label text-gray">detektifconan - Kantor Pajak</p>
+                    <p class="col-form-label text-gray">{{ $detail['name'] ?? '-' }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -28,7 +28,7 @@
                     <span class="helper-sign">:</span>
                 </label>
                 <div class="col-md-4">
-                    <p class="col-form-label text-gray">0812-3456-7890</p>
+                    <p class="col-form-label text-gray">{{ $detail['phone'] ?? '-' }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -37,7 +37,7 @@
                     <span class="helper-sign">:</span>
                 </label>
                 <div class="col-md-4">
-                    <p class="col-form-label text-gray">abc@def.com</p>
+                    <p class="col-form-label text-gray">{{ $detail['email'] ?? '-' }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -46,7 +46,7 @@
                     <span class="helper-sign">:</span>
                 </label>
                 <div class="col-md-4">
-                    <p class="col-form-label text-gray">Senin, 10 November 2022</p>
+                    <p class="col-form-label text-gray">{{ $detail['report_time_text'] ?? '-' }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -55,7 +55,7 @@
                     <span class="helper-sign">:</span>
                 </label>
                 <div class="col-md-4">
-                    <p class="col-form-label text-gray">Tugu Pahlawan, Surabaya</p>
+                    <p class="col-form-label text-gray">{{ $detail['scene'] ?? '-' }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -65,7 +65,7 @@
                 </label>
                 <div class="col-md-4">
                     <p class="col-form-label text-gray">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit blanditiis excepturi quo ullam nulla! Ea necessitatibus voluptas quia eaque perferendis accusamus dolorum pariatur illo, iure numquam porro corrupti deleniti tempora.
+                        {{ $detail['original_description']['description'] ?? '-' }}
                     </p>
                 </div>
             </div>
@@ -76,18 +76,14 @@
                 </label>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center flex-wrap gap-3">
-                        <button class="btn btn-grey d-flex align-items-center gap-2"
-                            type="button"
-                            onclick="detailEvidence()">
-                            <i class="bi bi-eye"></i>
-                            Bukti 1
-                        </button>
-                        <button class="btn btn-grey d-flex align-items-center gap-2"
-                            type="button"
-                            onclick="detailEvidence()">
-                            <i class="bi bi-eye"></i>
-                            Bukti 2
-                        </button>
+                        @foreach ($detail['original_evidence'] as $key => $item)
+                            <button class="btn btn-grey d-flex align-items-center gap-2"
+                                type="button"
+                                onclick="detailEvidence('{{ $item['image_path'] }}')">
+                                <i class="bi bi-eye"></i>
+                                Bukti {{ $key + 1 }}
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -102,11 +98,14 @@
                 </label>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center flex-wrap gap-3">
-                        <button class="btn btn-grey d-flex align-items-center gap-2"
-                            type="button" onclick="detailEvidence()">
-                            <i class="bi bi-eye"></i>
-                            Bukti 3
-                        </button>
+                        @foreach ($detail['additional_evidence'] as $key => $item)
+                            <button class="btn btn-grey d-flex align-items-center gap-2"
+                                type="button"
+                                onclick="detailEvidence('{{ $item['image_path'] }}')">
+                                <i class="bi bi-eye"></i>
+                                Bukti {{ $key + 1 }}
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -117,7 +116,7 @@
                 </label>
                 <div class="col-md-4">
                     <p class="col-form-label text-gray">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit blanditiis excepturi quo ullam nulla! Ea necessitatibus voluptas quia eaque perferendis accusamus dolorum pariatur illo, iure numquam porro corrupti deleniti tempora.
+                        {{ $detail['additional_description'][0]['description'] ?? '-' }}
                     </p>
                 </div>
             </div>
@@ -134,7 +133,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img src="{{ asset('assets/icons/dummy.jpg') }}" alt="preview-evidence" style="width: 100%; height: auto;">
+                <img id="img-evidence" src="{{ asset('assets/icons/dummy.jpg') }}" alt="preview-evidence" style="width: 100%; height: auto;">
             </div>
         </div>
     </div>
@@ -142,7 +141,8 @@
 
 @push('scripts')
     <script>
-        function detailEvidence() {
+        function detailEvidence(url) {
+            $('#img-evidence').attr('src', url);
             $('#DetailEvidence').modal('show');
         }
     </script>

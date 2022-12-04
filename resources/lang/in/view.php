@@ -48,5 +48,21 @@ return [
     'change_status' => 'Ubah status',
     'proof' => 'Bukti',
     'upload_investigation_report' => 'Unggah hasil investigasi',
-    'question' => 'Pertanyaan'
+    'question' => 'Pertanyaan',
+    'store_report_success' => 'Berhasil membuat laporan',
+    'captcha_error' => 'Captcha anda salah',
+    'captcha_required' => 'Captcha wajib diisi',
+    'time_reporting_required' => 'Waktu kejadian wajib diisi',
+    'place_reporting_required' => 'Tempat kejadian wajib diisi',
+    'chronology_required' => 'Detail kejadian wajib diisi',
+    'file_evidence_required' => 'File bukti pelanggaran wajib diisi',
+    'accept' => 'Diterima',
+    'reject' => 'Ditolak',
+    'less_evidence' => 'Kurang Barang Bukti',
+    'on_process' => 'Diproses',
+    'proven' => 'Terbukti',
+    'not_proven' => 'Tidak Terbukti',
+    'ticket_not_found' => 'Ticket tidak ditemukan',
+    'additional_store_success' => 'Bukti tambahan berhasil ditambahkan',
+    'wrong_token' => 'Token salah'
 ];

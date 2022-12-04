@@ -17,7 +17,7 @@
                                 {{-- captcha --}}
                                 <span>{!! $captcha !!}</span>
                                 <input type="text" name="captcha" class="form-control border-orange" placeholder="Captcha">
-                                <a class="btn btn-orange w-100" href="{{ route('reporting.success') }}">{{ __('view.send') }}</a>
+                                <a class="btn btn-orange w-100">{{ __('view.send') }}</a>
                             </div>
                         </div>
                     </div>

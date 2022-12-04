@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row h-100">
-        <div class="col-md-8 border-end"></div>
+        <div class="col-md-8 border-end hide-on-mobile"></div>
         <div class="col-md-4">
             <div class="container-login">
                 <div class="box-login">

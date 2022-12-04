@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UserService;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -46,8 +49,17 @@ class AuthController extends Controller
             ];
 
             if (Auth::attempt($credential)) {
-                $user = auth()->user();
-                return redirect()->route('dashboard');
+                $user = User::find(auth()->user()->id);
+                $role = $user->role;
+
+                // gather all data and put into cache
+                $service = new UserService();
+                $data = $service->gatherAllData();
+                if (!$data) {
+                    $this->logout($request);
+                }
+
+                return redirect($data['redirection']);
             }
 
             return redirect()
@@ -57,7 +69,8 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             return redirect()
                 ->back()
-                ->with('error_alert', 'Failed to login');
+                ->withInput()
+                ->with('error_alert', $th->getMessage());
         }
     }
 

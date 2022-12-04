@@ -11,6 +11,6 @@
 
     <div class="action d-flex align-items-center gap-3">
         <i class="bi bi-bell"></i>
-        <i class="bi bi-box-arrow-right"></i>
+        <a href="{{ route('logout') }}"><i class="bi bi-box-arrow-right"></i></a>
     </div>
 </div>

@@ -6,9 +6,9 @@
             <div>
                 <div class="d-flex align-items-center">
                     <p class="title text-navy fw-bold">
-                        {{ __('view.reporting_status') }} No. WRKBJB/2022 :
+                        {{ __('view.reporting_status') }} No. {{ $detail ? $detail['ticket_number'] : '-' }} :
                     </p>
-                    <button class="btn btn-success text-uppercase ms-3">Diterima</button>
+                    <button class="btn btn-success text-uppercase ms-3">{{ $detail ? $detail['status_text'] : '-' }}</button>
                 </div>
                 <p class="text-gray mt-3">Laporan bapak/Ibu telah kami terima dan akan kami tindak lanjuti</p>
             </div>
@@ -41,7 +41,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="{{ route('reporting.store.additional', $detail['id']) }}" method="POST" id="form-add-additional-evidence" enctype="multipart/form-data">
                         <div class="form-group row mb-3">
                             <label for="description" class="col-form-label col-md-3">{{ __('view.additional_description') }} : </label>
                             <div class="col-md-9">
@@ -75,9 +75,11 @@
                                 <div class="text-end">
                                     <div class="d-flex align-items-center gap-3">
                                         {{-- captcha --}}
-                                        <span>{!! $captcha !!}</span>
-                                        <input type="text" name="captcha" class="form-control border-orange" placeholder="Captcha">
-                                        <a class="btn btn-orange w-100" href="{{ route('reporting.success') }}">{{ __('view.send_report') }}</a>
+                                        <div class="captcha-container-report">
+                                            <span>{!! captcha_img('flat') !!}</span>
+                                        </div>
+                                        <input type="text" name="captcha" id="captcha" class="form-control border-orange" placeholder="Captcha">
+                                        <button class="btn btn-orange w-100" type="button" id="btn-submit-additional-evidence" onclick="storeEvidence()">{{ __('view.send_report') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -96,11 +98,11 @@
                     <form action="">
                         <div class="form-group mb-2">
                             <p class="fw-bold">{{ __('view.input_token') }}</p>
-                            <input type="text" class="form-control form-control-sm">
+                            <input type="number" class="form-control form-control-sm" name="confirm-token" id="confirm-token">
                         </div>
                         <div class="form-group">
                             <div class="text-end">
-                                <a class="btn btn-navy" href="{{ route('reporting.detail') }}">{{ __('view.submit') }}</a>
+                                <button class="btn btn-navy" type="button" onclick="seeDetail()">{{ __('view.submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -131,6 +133,52 @@
 
         function openTokenModal() {
             $('#modalToken').modal('show');
+        }
+
+        function storeEvidence() {
+            let form = $('#form-add-additional-evidence');
+            let method = form.attr('method');
+            let url = form.attr('action');
+            let data = new FormData(form[0]);
+            let btnText = $('#btn-submit-additional-evidence').text();
+
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                processData: false,
+                contentType: false,
+                cache : false,
+                beforeSend: function() {
+                    setLoading('btn-submit-additional-evidence', true);
+                },
+                success: function(res) {
+                    setLoading('btn-submit-additional-evidence', false, btnText);
+                    $('#modalAdditionalEvidence').modal('hide');
+                    setNotif(false, res.message);
+                },
+                error: function(err) {
+                    reloadCaptcha();
+                    setLoading('btn-submit-additional-evidence', false, btnText);
+                    setNotif(true, err.responseJSON ? err.responseJSON.message : 'Something wrong');
+                }
+            })
+        }
+
+        function reloadCaptcha() {
+            $('.captcha-container-report span').html(`{!! captcha_img('flat') !!}`);
+            $('#captcha').val('');
+        }
+
+        function seeDetail() {
+            let current_token = "{{ $detail['token'] }}";
+            let token = $('#confirm-token').val();
+
+            if (token == current_token) {
+                window.location.href = "{{ route('reporting.detail', encrypt_data($detail['ticket_number'])) }}"
+            } else {
+                setNotif(true, "{{ __('view.wrong_token') }}");
+            }
         }
     </script>
 @endpush

@@ -8,7 +8,10 @@
                 });
             @endfor
         @else
-
+            iziToast.error({
+                message: "{{ session('error_alert') }}",
+                position: "topRight"
+            });
         @endif
     @endif
 </script>

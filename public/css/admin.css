@@ -28,6 +28,14 @@ p {
 .col-form-label {
   padding-top: 2px;
 }
+.hide-on-mobile {
+  display: block;
+}
+@media screen and (max-width: 722px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
 .navbar {
   padding: 10px 40px;
   border-bottom: 1px solid #000;

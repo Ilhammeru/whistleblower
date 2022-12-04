@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ReportingService;
+use App\Models\Reporting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReportingController extends Controller
@@ -15,7 +22,6 @@ class ReportingController extends Controller
     public function index()
     {
         $title = 'Whistleblower';
-
         return view('pages.general.index', compact('title'));
     }
 
@@ -89,22 +95,52 @@ class ReportingController extends Controller
      * Display success message
      * @return Response
      */
-    public function success()
+    public function success($token, $ticket)
     {
         $title = __('view.report_received');
-
-        return view('pages.general.success', compact('title'));
+        $token = decrypt_data($token);
+        $ticket = decrypt_data($ticket);
+        return view('pages.general.success', compact('title', 'token', 'ticket'));
     }
     
     /**
      * Display tracking record
      * @return Response
      */
-    public function tracking()
+    public function tracking($ticket)
     {
         $title = __('view.tracking_detail');
         $captcha = captcha_img();
-        return view('pages.general.tracking', compact('title', 'captcha'));
+
+        $service = new ReportingService();
+        $params = [
+            'ticket' => $ticket
+        ];
+        $detail = $service->detailReport($params);
+        return view('pages.general.tracking', compact('title', 'captcha', 'detail'));
+    }
+
+    /**
+     * Function to track report
+     * 
+     * @param string ticket
+     * 
+     * @return Response
+     */
+    public function trackReport(Request $request)
+    {
+        try {
+            $ticket = $request->ticket;
+            $service = new ReportingService();
+            $track = $service->tracking($ticket);
+            if (!$track) {
+                return response()->json(['message' => __('view.ticket_not_found')], 500);
+            }
+            
+            return response()->json(['message' => 'Success', 'url' => route('reporting.tracking', encrypt_data($ticket))]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -115,7 +151,104 @@ class ReportingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+                // 'captcha' => 'required|captcha',
+                'time_reporting' => 'required',
+                'place_reporting' => 'required',
+                'chronology' => 'required',
+                'file_evidence' => 'required'
+            ],[
+                'captcha.captcha' => __('view.captcha_error'),
+                'captcha.required' => __('view.captcha_required'),
+                'time_reporting.required' => __('view.time_reporting_required'),
+                'place_reporting.required' => __('view.place_reporting_required'),
+                'chronology.required' => __('view.chronology_required'),
+                'file_evidence.required' => __('view.file_evidence_required')
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()->all()], 500);
+            }
+
+            $service = new ReportingService();
+
+            $model = new Reporting();
+            $model->ticket_number = generate_ticket();
+            $model->token = generate_token();
+            $model->report_time = date('Y-m-d H:i:s', strtotime($request->time_reporting));
+            $model->scene = $request->place_reporting;
+            if ($request->name) {
+                $model->name = $request->name;
+            }
+            if ($request->phone) {
+                $model->phone = $request->phone;
+            }
+            if ($request->email) {
+                $model->email = $request->email;
+            }
+            $model->save();
+
+            // handle description
+            $service->storeDescription($request->chronology, $model->id);
+
+            // handle upload file
+            $service->uploadEvidence($request->file_evidence, true, $model->id);
+            
+            DB::commit();
+            return response()->json(['message' => __('view.store_report_success'), 'url' => route('reporting.success', ['token' => encrypt_data($model->token), 'ticket' => encrypt_data($model->ticket_number)])]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to store additional evidence
+     * 
+     * @param int id
+     * @return Response
+     */
+    public function storeAdditional(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+                'captcha' => 'required|captcha',
+                'description' => 'required',
+                'file_evidence' => 'required'
+            ], [
+                'captcha.captcha' => __('view.captcha_error'),
+                'captcha.required' => __('view.captcha_required'),
+                'description.required' => __('view.chronology_required'),
+                'file_evidence.required' => __('view.file_evidence_required')
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()->all()], 500);
+            }
+
+            $service = new ReportingService();
+            // handle description
+            $service->storeDescription($request->description, $id, true);
+            // handle upload
+            $service->uploadEvidence($request->file_evidence, true, $id, true);
+            DB::commit();
+            return response()->json(['message' => __('view.additional_store_success')]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to generate new captcha
+     * 
+     * @return Response
+     */
+    public function reloadCaptcha()
+    {
+        return response()->json(['message' => 'Success', 'data' => captcha_img('flat')]);
     }
 
     /**
@@ -124,11 +257,17 @@ class ReportingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($ticket)
     {
         $title = __('view.reporting_detail');
         $captcha = captcha_img();
-        return view('pages.general.detail', compact('title', 'captcha'));
+
+        $service = new ReportingService();
+        $params = [
+            'ticket' => $ticket
+        ];
+        $detail = $service->detailReport($params);
+        return view('pages.general.detail', compact('title', 'captcha', 'detail'));
     }
 
     /**
