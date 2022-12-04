@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 // auth
 Route::post('/login/auth', 'AuthController@login')->name('admin.login.post');
-Route::get('/', 'AuthController@index')->name('admin.login');
+Route::get('/admin/login', 'AuthController@index')->name('admin.login');
 
 Route::get('/reload/captcha', 'ReportingController@reloadCaptcha')->name('reload.captcha');
 
 // begin::reporting
 // Route::middleware('auth')->group(function() {
     Route::get('/report-success/{token}/{ticket}', 'ReportingController@success')->name('reporting.success');
-    Route::get('/report', 'ReportingController@index')->name('reporting.index');
+    Route::get('/', 'ReportingController@index')->name('reporting.index');
     Route::post('/report', 'ReportingController@store')->name('reporting.store');
     Route::get('/detail/{ticket}', 'ReportingController@show')->name('reporting.detail');
     Route::get('/create', 'ReportingController@create')->name('reporting.create');

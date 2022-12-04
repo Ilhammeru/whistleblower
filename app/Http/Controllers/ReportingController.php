@@ -154,7 +154,7 @@ class ReportingController extends Controller
         DB::beginTransaction();
         try {
             $validator = Validator::make($request->all(), [
-                // 'captcha' => 'required|captcha',
+                'captcha' => 'required|captcha',
                 'time_reporting' => 'required',
                 'place_reporting' => 'required',
                 'chronology' => 'required',
