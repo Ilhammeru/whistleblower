@@ -63,14 +63,14 @@
     <script src="{{ asset('assets/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
     {{-- custom script --}}
     <script>
-        $(window).on("scroll", function() {
-            if($(window).scrollTop() > 100) {
-                $(".navbar").addClass("active");
-            } else {
-                //remove the background property so it comes transparent again (defined in your css)
-                $(".navbar").removeClass("active");
-            }
-        });
+        // $(window).on("scroll", function() {
+        //     if($(window).scrollTop() > 100) {
+        //         $(".navbar").addClass("active");
+        //     } else {
+        //         //remove the background property so it comes transparent again (defined in your css)
+        //         $(".navbar").removeClass("active");
+        //     }
+        // });
 
         $.ajaxSetup({
             headers: {

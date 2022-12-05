@@ -27,6 +27,10 @@
             -webkit-box-shadow: 1px 2px 11px -2px rgba(84,75,75,0.75);
             -moz-box-shadow: 1px 2px 11px -2px rgba(84,75,75,0.75);
         }
+
+        ::-ms-reveal {
+            display: none !important;
+        }
     </style>
     @stack('styles')
 

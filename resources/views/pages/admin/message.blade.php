@@ -36,7 +36,7 @@
                                 <div class="form-group mb-3 row">
                                     <div class="col">
                                         <div class="text-end">
-                                            <a class="btn btn-navy" href="{{ route('reporting.success') }}">{{ __('view.send') }}</a>
+                                            <a class="btn btn-navy" href="#">{{ __('view.send') }}</a>
                                         </div>
                                     </div>
                                 </div>
